@@ -1,66 +1,112 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
   <meta charset="UTF-8">
-  <title>تسجيل الدخول - البوابة الآمنة</title>
+  <title>تسجيل الدخول - حساب Google</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: rgba(0,0,0,0.6);
-      margin: 0;
-      height: 100vh;
+      background-color: #f1f1f1;
       display: flex;
       justify-content: center;
       align-items: center;
+      height: 100vh;
+      margin: 0;
     }
-    .popup {
-      background: white;
-      padding: 25px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      width: 320px;
+    .container {
+      background-color: white;
+      width: 350px;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    .logo {
+      display: block;
+      margin: 0 auto 20px auto;
+      width: 90px;
+    }
+    h1 {
+      font-size: 22px;
+      font-weight: normal;
       text-align: center;
     }
-    .popup img {
-      width: 60px;
-      margin-bottom: 15px;
+    p {
+      font-size: 14px;
+      color: #5f6368;
+      text-align: center;
     }
-    .popup h2 {
-      margin: 0 0 20px;
-      font-size: 18px;
-      color: #333;
-    }
-    .popup input {
+    input {
       width: 100%;
       padding: 10px;
       margin: 8px 0;
-      border: 1px solid #ccc;
-      border-radius: 6px;
+      border: 1px solid #dadce0;
+      border-radius: 4px;
+      font-size: 14px;
     }
-    .popup button {
-      width: 100%;
-      padding: 10px;
-      background: #4CAF50;
+    button {
+      background-color: #1a73e8;
       color: white;
       border: none;
-      border-radius: 6px;
+      padding: 10px 20px;
+      font-size: 14px;
+      border-radius: 4px;
       cursor: pointer;
+      float: right;
     }
-    .popup button:hover {
-      background: #45a049;
+    button:hover {
+      background-color: #1669c1;
+    }
+    .hidden {
+      display: none;
+    }
+    .footer {
+      margin-top: 30px;
+      font-size: 12px;
+      text-align: center;
+      color: #5f6368;
     }
   </style>
 </head>
 <body>
-  <div class="popup">
-    <img src="user-icon.png" alt="User">
-    <h2>تسجيل الدخول إلى حسابك</h2>
-    <form action="mailer.php" method="POST">
-      <input type="text" name="username" placeholder="اسم المستخدم" required>
-      <input type="password" name="password" placeholder="كلمة المرور" required>
-      <button type="submit">تسجيل الدخول</button>
-    </form>
+  <div class="container">
+    <img src="https://ssl.gstatic.com/accounts/ui/logo_2x.png" alt="Google" class="logo">
+    <h1>تسجيل الدخول</h1>
+    <p>متابعة إلى Gmail</p>
+
+    <!-- الخطوة الأولى: البريد -->
+    <div id="step-email">
+      <input type="email" id="email" placeholder="البريد الإلكتروني أو رقم الهاتف" required>
+      <button onclick="goToPassword()">التالي</button>
+    </div>
+
+    <!-- الخطوة الثانية: كلمة المرور -->
+    <div id="step-password" class="hidden">
+      <input type="password" id="password" placeholder="أدخل كلمة المرور" required>
+      <button onclick="login()">تسجيل الدخول</button>
+    </div>
+
+    <div class="footer">لن يتم إرسال البيانات - نموذج تعليمي فقط</div>
   </div>
+
+  <script>
+    function goToPassword() {
+      const email = document.getElementById('email').value.trim();
+      if(email === "") {
+        alert("الرجاء إدخال البريد الإلكتروني");
+        return;
+      }
+      document.getElementById('step-email').classList.add('hidden');
+      document.getElementById('step-password').classList.remove('hidden');
+    }
+
+    function login() {
+      const password = document.getElementById('password').value.trim();
+      if(password === "") {
+        alert("الرجاء إدخال كلمة المرور");
+        return;
+      }
+      alert("تم تسجيل الدخول (محاكاة فقط)");
+    }
+  </script>
 </body>
 </html>
-
